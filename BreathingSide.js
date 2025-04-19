@@ -46,8 +46,12 @@ function breathing() {
         return;
     }
 
-    if (runde >= alleRunder) {
+    if (tilstand === 4) {
+        tid = 0
+    }
+    else if (runde >= alleRunder) {
         tilstand = 4; // Flot klaret
+        gemILocalStorage()
     } else if (tid <= runde1) {
         tilstand = 1; // Ånd ind
         aandInd(tid); // Kald ånd ind funktionen
@@ -83,4 +87,12 @@ function holdVejret() {
 function pustUd(tid) {
     radius = 150 - (tid / runde3) * 100; // Radius tildelese en værdi mellem 150 og 50, afhæning af tiden
     circle(200, 200, radius); // Tegn cirklen med radiusen 
+}
+
+function gemILocalStorage() {
+    let aktivBruger = localStorage.getItem('aktivBruger');
+    let brugerData = JSON.parse(localStorage.getItem(aktivBruger));
+    let afsluttet = brugerData.breathingData || 0;
+    brugerData.breathingData = ++afsluttet;
+    localStorage.setItem(aktivBruger, JSON.stringify(brugerData));
 }

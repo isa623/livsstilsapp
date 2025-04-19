@@ -74,18 +74,14 @@ function setup() {
     // Funktion til at gemme data i localStorage for den aktive bruger
     function gemILocalStorage() {
         let brugerData = JSON.parse(localStorage.getItem(aktivBruger)); // Hentter data for brugeren i local storage og gemmer som objekt
-
         brugerData.huskeliste = huskeElementer; // overskiver eller opretter huskelisten 
-
         localStorage.setItem(aktivBruger, JSON.stringify(brugerData));  // gemmer bruger dataen i local Storage under aktiv bruge som JSON tekst format 
     }
 
     // Funktion til at indlæse data fra localStorage for den aktive bruger
     function hentFraLocalStorage() {
         let brugerData = JSON.parse(localStorage.getItem(aktivBruger));  // Hent eksisterende data for brugeren og laver det til et objekt
-
         let huskeliste = brugerData.huskeliste || []; // Hent huskeliste strukturen hvis den findes
-
         for (let i = 0; i < huskeliste.length; i++) {
             addHuskeElement(huskeliste[i].tekst, huskeliste[i].afsluttet) // Tilføjer de gmete huskeliste elementer samt deres afslutet staus, som bliver gemt i huskeElementer array 
         }

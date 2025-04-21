@@ -90,9 +90,9 @@ function pustUd(tid) {
 }
 
 function gemILocalStorage() {
-    let aktivBruger = localStorage.getItem('aktivBruger');
-    let brugerData = JSON.parse(localStorage.getItem(aktivBruger));
+    let brugerNavn = localStorage.getItem('aktivBruger');
+    let brugerData = JSON.parse(localStorage.getItem(brugerNavn));
     let afsluttet = brugerData.breathingData || 0;
     brugerData.breathingData = ++afsluttet;
-    localStorage.setItem(aktivBruger, JSON.stringify(brugerData));
+    localStorage.setItem(brugerNavn, JSON.stringify(brugerData));
 }

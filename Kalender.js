@@ -14,10 +14,10 @@ function setup() {
     let dage = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag'];// opretter array med alle ugens dage
 
     // Hentter brugernavn fra localStorage (brugeren skal væree logget ind)
-    let aktivBruger = localStorage.getItem('aktivBruger');
+    let brugerNavn = localStorage.getItem('aktivBruger');
 
     // Opret overskrift for den aktive brugers kalender
-    let overskrift = createElement('h2', 'Kalender for ' + aktivBruger + ' -  Uge ' + (aktivUge + 1).toString());
+    let overskrift = createElement('h2', 'Kalender for ' + brugerNavn + ' -  Uge ' + (aktivUge + 1).toString());
     overskrift.style('text-align', 'center');
 
     // Opret inputfelt til at beskrive aktiviteten
@@ -70,8 +70,9 @@ function setup() {
     let naesteUgeKnap = createButton('Næste uge');
     naesteUgeKnap.style('margin', '10px');
     naesteUgeKnap.mousePressed(() => {
-        aktivUge = (aktivUge + 1) % 52;// Lægger en uge til den aktive uge
-        opdaterKalender();
+        // Anvender modulos 52 og får værdi fra 0-51 
+        aktivUge = (aktivUge + 1) % 52; //Lægger 1 uge til for at gå en uge frem 
+        opdaterKalender();// Skifter til næste uge og viser kalderens uge aktiviteter 
     });
 
     // Container til at vise alle dagene i en den valgte uge
@@ -80,7 +81,7 @@ function setup() {
 
     // Funktion til at opdatere kalenderen både overskrift og aktivitet
     function opdaterKalender() {
-        overskrift.html('Kalender for ' + aktivBruger + ' -  Uge ' + (aktivUge + 1).toString());// Overskrift som hviser hvilken uge brugern er i
+        overskrift.html('Kalender for ' + brugerNavn + ' -  Uge ' + (aktivUge + 1).toString());// Overskrift som hviser hvilken uge brugern er i
         kalenderContainer.html('');//  Nulstiller kalender containern så den nye valgte uge kan vises
 
         // Tegner selve kalnderen
@@ -102,14 +103,14 @@ function setup() {
 
     // Funktion til at gemme data i localStorage
     function gemILocalStorage() {
-        let brugerData = JSON.parse(localStorage.getItem(aktivBruger));// Hentter bruger data fra localStorage 
+        let brugerData = JSON.parse(localStorage.getItem(brugerNavn));// Hentter bruger data fra localStorage 
         brugerData.kalenderData = kalenderData;// opdater brugerdataen for kalenderData med det nye kalenderData
-        localStorage.setItem(aktivBruger, JSON.stringify(brugerData));// Gemmer brugerdata i localStorage som en JSON tekst format
+        localStorage.setItem(brugerNavn, JSON.stringify(brugerData));// Gemmer brugerdata i localStorage som en JSON tekst format
     }
 
     // Funktion til at hente data fra localStorage
     function hentFraLocalStorage() {
-        let brugerData = JSON.parse(localStorage.getItem(aktivBruger));//  Hentter bruger data fra localStorage
+        let brugerData = JSON.parse(localStorage.getItem(brugerNavn));//  Hentter bruger data fra localStorage
         kalenderData = brugerData.kalenderData || kalenderData;// Tildeler kalenderData det gemte kalenderData eller tomme kalenderData
         opdaterKalender();// opdater kalendern med det hentet data. 
     }
@@ -117,3 +118,4 @@ function setup() {
     // Indlæs gemte data
     hentFraLocalStorage();
 }
+

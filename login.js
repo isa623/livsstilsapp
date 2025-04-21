@@ -1,3 +1,5 @@
+let fejlBeskeder;
+
 function setup() {
 	noCanvas();
 
@@ -31,7 +33,7 @@ function setup() {
 	registreKnap.mousePressed(registreMousePressed);
 
 	// Opretter et tekst elemennt, som kan vise evt. fejlbeskeder. Her gives laut til det. 
-	const fejlBeskeder = createDiv().style('color', 'red').style('margin-top', '20px').style('font-weight', 'bold');
+	fejlBeskeder = createDiv().style('color', 'red').style('margin-top', '20px').style('font-weight', 'bold');
 
 	// Tilføjer ellementer som oppeover er lavet til containeren
 	container.child(brugerNavnBoks);
@@ -39,15 +41,12 @@ function setup() {
 	container.child(loginKnap);
 	container.child(registreKnap);
 	container.child(fejlBeskeder);
-
-	// Laver fejlBeskeder til en global variabel gennem window. for at kunne opdatere det andre steder. 
-	window.fejlBeskeder = fejlBeskeder;
 }
 
 // Laver funktiunen visBesked som har et paremter.
 function visBesked(besked) {
-	// Her bruges htlm() som kan ændre indholet af et element, og derved kan beskeden vises i sin container. 
-	window.fejlBeskeder.html(besked);
+	// Skriver beskeden i html objektet 
+	fejlBeskeder.html(besked);
 }
 
 //laver login funktion med to paremtere
@@ -70,6 +69,7 @@ function login(brugerNavn, kode) {
 		}
 	} else {
 		visBesked('Brugern findes ikke');
+
 	}
 }
 // funktiun til at registrer sig som bruger, med to paremtere.

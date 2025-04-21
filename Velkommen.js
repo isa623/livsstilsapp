@@ -10,12 +10,13 @@ function setup() {
     visPointSystem(); // Tilføj visning af point
 }
 
-// Funktion til at lave knapper
+// Funktion til at lave knapper, tager i mod 4 paremtere 
 function lavKnap(tekst, positionX, positionY, knapSide) {
     let knap = createButton(tekst);
-    knap.position(positionX, positionY)
-    knap.mousePressed(changePageFunction(knapSide))
-    return knap;
+    knap.position(positionX, positionY);
+    // Kalder changePageFunction som skifter side når knappen trykkes
+    knap.mousePressed(changePageFunction(knapSide));
+    return knap; // retunere kanppen
 }
 
 // Skift til HTML side
@@ -28,8 +29,8 @@ function changePageFunction(side) {
 // Funktion til at beregne og vise point
 function visPointSystem() {
     let point = 0;
-    let aktivBruger = localStorage.getItem('aktivBruger');// Henter brugern navn
-    let brugerData = JSON.parse(localStorage.getItem(aktivBruger));// Hentter bruger data fra localStorage 
+    let brugerNavn = localStorage.getItem('aktivBruger');// Henter brugern navn
+    let brugerData = JSON.parse(localStorage.getItem(brugerNavn));// Hentter bruger data fra localStorage 
     let huskelisteData = brugerData.huskeliste || [];// Henter huskeliste data hvis der er noget
     for (let i = 0; i < huskelisteData.length; i++) {
         let huskeElement = huskelisteData[i];

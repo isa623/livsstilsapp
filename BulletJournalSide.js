@@ -5,10 +5,10 @@ function setup() {
     journalData = [] // array til journal data 
 
     // Hent brugernavn fra localStorage (Her skal brugern være, at brugeren er logget ind)
-    let aktivBruger = localStorage.getItem('aktivBruger');
+    let brugerNavn = localStorage.getItem('aktivBruger');
 
     // Opret overskrift for den aktive brugers journal
-    let overskrift = createElement('h2', 'Journal for ' + aktivBruger);
+    let overskrift = createElement('h2', 'Journal for ' + brugerNavn);
     overskrift.style('text-align', 'center');
 
     // Opret inputfelt til at skrive journal data
@@ -42,7 +42,7 @@ function setup() {
 
     // Funktion til at opdatere journalen
     function opdaterJournal() {
-        overskrift.html('Journal for ' + aktivBruger);
+        overskrift.html('Journal for ' + brugerNavn);
         journalContainer.html('');// Nulstiller container for journalen
 
         for (let i = 0; i < journalData.length; i++) {
@@ -55,14 +55,19 @@ function setup() {
 
     // Funktion til at gemme data i localStorage
     function gemILocalStorage() {
-        let brugerData = JSON.parse(localStorage.getItem(aktivBruger));// Henter bruger navn for aktov bruger
-        brugerData.journalData = journalData;//Overskriver det gamle journalData med det nye 
-        localStorage.setItem(aktivBruger, JSON.stringify(brugerData));// gemmer dataen som JSON tekst format i localStorage under brugernavn
+        // Henter bruger data via brugernavn og konventere JSON streng til objekt notation 
+        let brugerData = JSON.parse(localStorage.getItem(brugerNavn));
+
+        // Overskriver det gamle journalData med det nye 
+        brugerData.journalData = journalData;
+
+        // Gemmer dataen som JSON format i localStorage under brugernavn
+        localStorage.setItem(brugerNavn, JSON.stringify(brugerData));
     }
 
     // Funktion til at hente data fra localStorage
     function hentFraLocalStorage() {
-        let brugerData = JSON.parse(localStorage.getItem(aktivBruger));// Henter bruger navn for aktov bruger
+        let brugerData = JSON.parse(localStorage.getItem(brugerNavn));// Henter bruger navn for aktov bruger
         journalData = brugerData.journalData || journalData;// Henter det evt. journalData eller tomt array
         opdaterJournal(); //Tilføjer det til siden så det vises
     }
